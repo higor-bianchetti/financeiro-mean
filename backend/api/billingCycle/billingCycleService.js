@@ -9,7 +9,7 @@ Para que a API retorne o objeto atual depois do update é necessário passar o v
 OBS: Por padrão, a API também não checa as validações em requisições PUT. Para que as requisições PUT também sejam validadas é preciso passar o valor runValidators: true. */
 BillingCycle.updateOptions({new: true, runValidators: true})
 
-/* Middleware que será chamado sempre após uma requisição POST ou PUT para padronizar as mensagens de erros. */
+/* Middleware que será chamado sempre após uma requisição POST ou PUT para padronizar as mensagens de erro. */
 BillingCycle.after('post', sendErrorsOrNext).after('put', sendErrorsOrNext)
 
 function sendErrorsOrNext(req, res, next) {
