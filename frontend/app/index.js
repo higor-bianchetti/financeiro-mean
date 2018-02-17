@@ -1,1 +1,3 @@
-angular.module('primeiroApp', ['ui.router', 'ngAnimate', 'toastr'])
+(function() {
+    angular.module('primeiroApp', ['ui.router', 'ngAnimate', 'toastr'])
+})()
