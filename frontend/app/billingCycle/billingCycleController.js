@@ -28,6 +28,37 @@
             tabs.show(self, {tabDelete: true})
         }
 
+        self.create = function() {
+            $http.post(url, self.billingCycle).then(function(response) {
+                self.refresh()
+                msgs.addSuccess('Operação Realizada com Sucesso!')
+            }, function(response) {
+                msgs.addError(response.data.errors)
+            })
+        }
+
+        self.update = function() {
+            const updateUrl = `${url}/${self.billingCycle._id}`
+
+            $http.put(updateUrl, self.billingCycle).then(function(response) {
+                self.refresh()
+                msgs.addSuccess('Operação relizada com sucesso!')
+            }, function(response) {
+                msgs.addError(response.data.errors)
+            })
+        }
+
+        self.delete = function() {
+            const deleteUrl = `${url}/${self.billingCycle._id}`
+
+            $http.delete(deleteUrl, self.billingCycle).then(function(response) {
+                self.refresh()
+                msgs.addSuccess('Operação relizada com sucesso!')
+            }, function(response) {
+                msgs.addError(response.data.errors)
+            })
+        }
+
         self.refresh()
     }
 })()
