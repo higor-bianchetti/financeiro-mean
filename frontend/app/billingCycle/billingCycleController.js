@@ -1,21 +1,29 @@
 (function() {
     angular.module('primeiroApp').controller('BillingCycleController', [
         '$http',
+        '$location',
         'msgs',
         'tabs',
         BillingCycleController
     ])
 
-    function BillingCycleController($http, msgs, tabs) {
+    function BillingCycleController($http, $location, msgs, tabs) {
         const self = this
         const url = 'http://localhost:3003/api/billingCycles'
 
         self.refresh = function() {
-            $http.get(url).then(function(response) {
+            const page = parseInt($location.search().page) || 1
+
+            $http.get(`${url}?skip=${(page - 1) * 10}&limit=10`).then(function(response) {
                 self.billingCycle = {credits: [{}], debts: [{}]}
                 self.billingCycles = response.data
                 self.calculateValues()
-                tabs.show(self, {tabList: true, tabCreate: true})
+                
+                /* Obtendo a quantidade de páginas que é preciso para mostrar todos os registros salvos no banco. */
+                $http.get(`${url}/count`).then(function(response) {
+                    self.pages = Math.ceil(response.data.value / 10)
+                    tabs.show(self, {tabList: true, tabCreate: true})
+                })
             })
         }
 
