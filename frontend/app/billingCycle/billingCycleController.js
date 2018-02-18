@@ -14,17 +14,20 @@
             $http.get(url).then(function(response) {
                 self.billingCycle = {credits: [{}], debts: [{}]}
                 self.billingCycles = response.data
+                self.calculateValues()
                 tabs.show(self, {tabList: true, tabCreate: true})
             })
         }
 
         self.showTabUpdate = function(billingCycle) {
             self.billingCycle = billingCycle
+            self.calculateValues()
             tabs.show(self, {tabUpdate: true})
         }
 
         self.showTabDelete = function(billingCycle) {
             self.billingCycle = billingCycle
+            self.calculateValues()
             tabs.show(self, {tabDelete: true})
         }
 
@@ -65,11 +68,13 @@
 
         self.cloneCredit = function(index, {name, value}) {
             self.billingCycle.credits.splice(index + 1, 0, {name, value})
+            self.calculateValues()
         }
 
         self.deleteCredit = function(index) {
             if(self.billingCycle.credits.length > 1) {
                 self.billingCycle.credits.splice(index, 1)
+                self.calculateValues()
             }
         }
 
@@ -79,12 +84,31 @@
 
         self.cloneDebt = function(index, {name, value, status}) {
             self.billingCycle.debts.splice(index + 1, 0, {name, value, status})
+            self.calculateValues()
         }
 
         self.deleteDebt = function(index) {
             if(self.billingCycle.debts.length > 1) {
                 self.billingCycle.debts.splice(index, 1)
+                self.calculateValues()
             }
+        }
+
+        self.calculateValues = function() {
+            self.credit = 0
+            self.debt = 0
+
+            if(self.billingCycle) {
+                self.billingCycle.credits.forEach(function({value}) {
+                    self.credit += !value || isNaN(value) ? 0 : parseFloat(value)
+                });
+
+                self.billingCycle.debts.forEach(function({value}) {
+                    self.debt += !value || isNaN(value) ? 0 : parseFloat(value)
+                });
+            }
+
+            self.total = self.credit - self.debt
         }
 
         self.refresh()
