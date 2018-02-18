@@ -18,6 +18,16 @@
             })
         }
 
+        self.showTabUpdate = function(billingCycle) {
+            self.billingCycle = billingCycle
+            tabs.show(self, {tabUpdate: true})
+        }
+
+        self.showTabDelete = function(billingCycle) {
+            self.billingCycle = billingCycle
+            tabs.show(self, {tabDelete: true})
+        }
+
         self.refresh()
     }
 })()
