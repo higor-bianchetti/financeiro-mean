@@ -12,7 +12,7 @@
 
         self.refresh = function() {
             $http.get(url).then(function(response) {
-                self.billingCycle = {}
+                self.billingCycle = {credits: [{}], debts: [{}]}
                 self.billingCycles = response.data
                 tabs.show(self, {tabList: true, tabCreate: true})
             })
