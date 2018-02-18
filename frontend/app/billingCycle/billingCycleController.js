@@ -59,6 +59,34 @@
             })
         }
 
+        self.addCredit = function(index) {
+            self.billingCycle.credits.splice(index + 1, 0, {})
+        }
+
+        self.cloneCredit = function(index, {name, value}) {
+            self.billingCycle.credits.splice(index + 1, 0, {name, value})
+        }
+
+        self.deleteCredit = function(index) {
+            if(self.billingCycle.credits.length > 1) {
+                self.billingCycle.credits.splice(index, 1)
+            }
+        }
+
+        self.addDebt = function(index) {
+            self.billingCycle.debts.splice(index + 1, 0, {})
+        }
+
+        self.cloneDebt = function(index, {name, value, status}) {
+            self.billingCycle.debts.splice(index + 1, 0, {name, value, status})
+        }
+
+        self.deleteDebt = function(index) {
+            if(self.billingCycle.debts.length > 1) {
+                self.billingCycle.debts.splice(index, 1)
+            }
+        }
+
         self.refresh()
     }
 })()
